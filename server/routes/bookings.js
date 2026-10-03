@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { wrap } from '../middleware/error.js';
+import { protect } from '../middleware/auth.js';
+import * as c from '../controllers/bookings.js';
+const r = Router();
+r.use(protect);
+r.post('/', wrap(c.createBooking));
+r.get('/mine', wrap(c.myBookings));
+r.get('/:id', wrap(c.getBooking));
+r.put('/:id/cancel', wrap(c.cancelBooking));
+export default r;

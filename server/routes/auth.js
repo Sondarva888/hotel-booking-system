@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { wrap } from '../middleware/error.js';
+import { protect } from '../middleware/auth.js';
+import * as c from '../controllers/auth.js';
+const r = Router();
+r.post('/register', wrap(c.register));
+r.post('/login', wrap(c.login));
+r.get('/me', protect, wrap(c.me));
+r.put('/profile', protect, wrap(c.updateProfile));
+export default r;

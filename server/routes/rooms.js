@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { wrap } from '../middleware/error.js';
+import { protect, adminOnly } from '../middleware/auth.js';
+import * as c from '../controllers/rooms.js';
+const r = Router();
+r.get('/', wrap(c.listRooms));
+r.get('/admin/all', protect, adminOnly, wrap(c.adminListRooms));
+r.get('/:id', wrap(c.getRoom));
+r.get('/:id/availability', wrap(c.checkAvailability));
+r.post('/', protect, adminOnly, wrap(c.createRoom));
+r.put('/:id', protect, adminOnly, wrap(c.updateRoom));
+r.delete('/:id', protect, adminOnly, wrap(c.deleteRoom));
+export default r;

@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { wrap } from '../middleware/error.js';
+import { protect, adminOnly } from '../middleware/auth.js';
+import * as c from '../controllers/admin.js';
+import { allReviews } from '../controllers/reviews.js';
+const r = Router();
+r.use(protect, adminOnly);
+r.get('/stats', wrap(c.stats));
+r.get('/bookings', wrap(c.allBookings));
+r.put('/bookings/:id/status', wrap(c.updateBookingStatus));
+r.get('/users', wrap(c.allUsers));
+r.get('/reviews', wrap(allReviews));
+export default r;
